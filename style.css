@@ -1,0 +1,434 @@
+/* ===== Estilo centralizado y unificado (pegar al final de style.css) ===== */
+
+/* Contenedor central que centra todo en la pantalla */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #e7f7ff, #fff7ec);
+  font-family: 'Baloo 2', Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Wrapper: caja centrada con padding y ancho controlado */
+.page-center {
+  width: 100%;
+  max-width: 820px;
+  margin: 18px;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card que contiene el juego; mantén consistencia con otros estilos */
+.game-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 12px 30px rgba(17,24,39,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* CENTRA TODO EL INTERIOR */
+  gap: 12px;
+}
+
+/* confetti dentro de la tarjeta (.game-card) */
+#confetti-container{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible; /* permitir que las piezas suban fuera del área si quieres */
+  z-index: 9999; /* encima de la tarjeta */
+}
+
+.confetti {
+  position: absolute; /* absolute dentro de #confetti-container */
+  pointer-events: none;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0.95;
+  transform-origin: center;
+  /* la animación se controla por JS (duración aleatoria) */
+}
+
+/* Centrar y estilizar el header (imagen, título) */
+#welcome img {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 8px auto 4px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+/* Selector (select) centrado y con estilo igual que botones de respuesta */
+#subject, input[type="text"], input[type="password"], #writeAnswer {
+  width: 86%;
+  max-width: 640px;
+  display: block;
+  margin: 6px auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #333;;
+  font-size: 16px;
+  background: linear-gradient(180deg,#f8fbff,#ffffff);
+  box-shadow: 0 8px 20px rgba(11,27,64,0.04);
+  text-align: center; /* texto centrado dentro de los inputs */
+}
+
+/* Botones principales (unificar con opciones de preguntas) */
+button, #answers button, .small-btn {
+  font-family: inherit;
+  border: 1px solid #333;;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  background: linear-gradient(180deg,#f8fbff,#ffffff);
+  box-shadow: 0 10px 24px rgba(11,27,64,0.06);
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Botones grandes (opciones) estilo consistente */
+#answers button {
+  width: 88%;
+  max-width: 640px;
+  margin: 6px auto;
+  display: block;
+}
+
+/* Hover/active */
+button:hover, #answers button:hover { transform: translateY(-4px); box-shadow:0 18px 36px rgba(11,27,64,0.08) }
+button:active, #answers button:active { transform: translateY(2px) }
+
+/* Centrar el bloque de pregunta */
+#question {
+  width: 92%;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 6px auto 8px auto;
+}
+
+/* Solución y feedback centrados */
+#solucion, #feedback, #score {
+  width: 88%;
+  max-width: 640px;
+  margin: 6px auto;
+  text-align: center;
+}
+
+/* Alinear y centrar la zona de juego cuando esté visible */
+#game {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Alinear welcome centrally */
+#welcome {
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botón "Siguiente" centrado y pequeño */
+#next {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* Media queries: mantener centrado y cómodo en móviles */
+@media (max-width: 520px) {
+  #subject, input[type="text"], input[type="password"], #writeAnswer {
+    width: 94%;
+    padding: 12px;
+  }
+  #answers button { width: 94%; font-size: 16px; padding: 12px; }
+  .page-center { margin: 12px; padding: 12px; }
+}
+
+/* Si quieres marcar el elemento activo de opciones (acierto/fracaso) */
+.btn-correct{ background: linear-gradient(180deg,#eafff0,#dfffe6) !important; box-shadow:0 18px 36px rgba(20,200,120,0.08) !important; }
+.btn-wrong{ background: linear-gradient(180deg,#fff0f0,#ffecec) !important; box-shadow:0 12px 30px rgba(255,50,50,0.06) !important; transform: none !important; }
+
+/* apariencia de controles deshabilitados */
+button.disabled, #answers .disabled {
+  opacity: 0.65;
+  transform: none !important;
+  cursor: default;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.03) !important;
+  pointer-events: none;
+}
+input.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ===== Contador de puntos destacado ===== */
+#score {
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: #ff6b6b; /* rojo alegre */
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* animación cuando suben puntos */
+#score.bump {
+  transform: scale(1.3);
+  color: #2ecc71; /* verde al sumar */
+}
+
+/* ===== Custom subject dropdown (estilo consistente con botones) ===== */
+.subject-toggle{
+  width:86%;
+  max-width:640px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:12px 16px;
+  border-radius:12px;
+  background:linear-gradient(180deg,#f8fbff,#fff);
+  box-shadow:0 10px 24px rgba(11,27,64,0.06);
+  border:1px solid #333;;
+  font-size:16px;
+  cursor:pointer;
+  margin:6px auto;
+}
+.subject-toggle:focus{
+  outline:3px solid rgba(43,124,255,0.14);
+  outline-offset:4px;
+}
+
+/* ===== Evitar que el dropdown agrande la tarjeta ===== */
+
+/* Asegúrate de que el contenedor del dropdown es relativo */
+.subject-custom {
+  position: relative; /* necesario para posicionar el dropdown en absoluto */
+  z-index: 50;
+}
+
+/* El dropdown ya no ocupa espacio del flujo: */
+.subject-list{
+  position: absolute;              /* fuera del flujo */
+  top: calc(100% + 8px);           /* justo debajo del botón */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  max-width: 640px;
+  margin: 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(11,27,64,0.18);
+  display: none;                   /* JS alterna display/block */
+  max-height: 40vh;                /* nunca demasiado alto */
+  overflow-y: auto;                /* scroll interno si hace falta */
+  box-sizing: border-box;
+  z-index: 2000;                   /* encima de todo */
+}
+
+/* Opciones: igual que antes */
+.subject-list li{
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  margin:6px 4px;
+  transition:background .12s ease, transform .12s ease;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
+  font-size:16px;
+}
+
+.subject-list li:hover{ background:#f0f8ff; transform:translateY(-3px); }
+.subject-list li[aria-selected="true"]{ background:linear-gradient(90deg,#fff4e6,#f8fff4); font-weight:800; color:#0b6; }
+
+.subject-arrow{ font-size:18px; color:#667 }
+
+/* ===== Marco principal estable (no salta al cambiar pregunta) ===== */
+
+.game-card {
+  /* Tamaño estable */
+  width: 100%;
+  max-width: 820px;
+
+  /* ALTURA FIJA ADAPTATIVA */
+  min-height: 80vh;      /* ocupa casi toda la pantalla */
+  max-height: 80vh;
+
+  /* En móviles muy pequeños */
+  height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* Permitir que cambie tamaño */
+  overflow: visible;
+}
+
+/* Zona interna del juego con scroll si hace falta */
+#game {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+/* Evitar que feedback/solución hagan crecer el marco */
+#feedback,
+#solucion {
+  min-height: 28px;
+}
+
+/* Tablets */
+@media (min-width: 600px) {
+  .game-card {
+    min-height: 75vh;
+    max-height: 75vh;
+  }
+}
+
+/* Escritorio */
+@media (min-width: 1024px) {
+  .game-card {
+    min-height: 700px;
+    max-height: 700px;
+  }
+}
+
+#feedback {
+  visibility: visible;
+}
+
+#solucion {
+  visibility: visible;
+}
+
+/* ===== Layout estable para que la tarjeta NO cambie de tamaño al cambiar preguntas ===== */
+
+/* 1) Base: tarjeta con altura fija adaptativa (usa viewport pero con límites) */
+:root{
+  --game-vh: 80vh;    /* altura base relativa al viewport */
+  --game-max-px: 800px; /* máximo en desktop */
+  --game-min-px: 520px; /* mínimo en desktop/tablet */
+}
+
+/* tarjeta principal: fijo, no "crece" con el contenido */
+.game-card {
+  width: 100%;
+  max-width: 820px;
+  /* altura estable: preferimos un clamped value */
+  height: clamp(var(--game-min-px), var(--game-vh), var(--game-max-px));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: relative; /* para children absolutos (confetti, dropdown) */
+  overflow: hidden;   /* no dejar que el dropdown empuje (pero dropdown es absolute) */
+}
+
+/* 2) Header y footer reservan su espacio y no colapsan */
+.header { flex: 0 0 auto; }
+.brand { flex: 0 0 auto; }
+
+/* 3) Área central que SÍ se desplaza: #game (o .content-area) */
+#game {
+  flex: 1 1 auto;         /* ocupa el espacio restante */
+  overflow-y: auto;       /* scroll interno si el contenido es largo */
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 18px;
+  box-sizing: border-box;
+}
+
+/* 4) Asegurar que elementos no empujen el layout:
+   - #answers siempre tiene una altura mínima razonable
+   - #question centrado
+*/
+#question {
+  text-align: center;
+  margin: 8px auto;
+  padding: 4px 8px;
+  flex: 0 0 auto;
+}
+
+#answers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 220px;   /* evita cambios bruscos al aparecer/ocultar contenido */
+  box-sizing: border-box;
+  padding-bottom: 6px;
+}
+
+/* si tienes tipos con mucho contenido (ordenar/arrastrar), aumenta un poco: */
+#answers.large { min-height: 320px; }
+
+/* 5) #solucion / #feedback no deben cambiar la altura del contenedor padre */
+#solucion, #feedback {
+  min-height: 36px; /* reserva espacio */
+  box-sizing: border-box;
+}
+
+/* 6) Imagen en welcome con tamaño fijo para evitar shift cuando carga */
+#welcome img {
+  width: 180px;
+  height: 140px;        /* altura fija: evita reflujo al cargar */
+  object-fit: cover;
+  display: block;
+  margin: 8px auto;
+}
+
+/* 7) Asegurar dropdown absoluto (no empuja) - ya lo añadimos antes, repetido por robustez */
+.subject-custom { position: relative; z-index: 50; }
+.subject-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  max-height: 40vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* 8) Botones/inputs: tamaño consistente para evitar resizes */
+input, select, button, #writeAnswer {
+  box-sizing: border-box;
+}
+
+/* 9) Media queries finas: ajustar alturas en escritorio/móvil */
+@media (min-width: 1024px){
+  .game-card { height: clamp(560px, 70vh, 800px); }
+  #answers { min-height: 260px; }
+}
+@media (max-width: 520px){
+  .game-card { height: 86vh; }
+  #answers { min-height: 200px; }
+  .subject-list { left: 8px; right:8px; transform:none; top: 18vh; max-height: 62vh; }
+}
+
+.highlight {
+  background-color: #fff3a2; /* amarillo suave */
+  border: 2px solid #f0c000;
+}
